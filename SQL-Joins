@@ -1,0 +1,38 @@
+--SQL Inner Join, Outer Join, Left/Right Join
+
+--Basic Inner Join
+SELECT * 
+FROM EmployeeDemog 
+Inner Join EmployeeSalary 
+ON EmployeeDemog.EmployeeID = EmployeeSalary.EmployeeID – will show what is the same from both tables
+
+--Outer Join
+SELECT * 
+FROM EmployeeDemog 
+Full Outer Join EmployeeSalary 
+ON EmployeeDemog.EmployeeID = EmployeeSalary.EmployeeID
+-	Will show from both tables despite similarities 
+
+--Right Outer Join
+SELECT * 
+FROM EmployeeDemog 
+Right Outer Join EmployeeSalary 
+ON EmployeeDemog.EmployeeID = EmployeeSalary.EmployeeID
+SELECT EmployeeDemog.EmployeeID, LastName, JobTitle
+FROM EmployeeDemog 
+Inner Join EmployeeSalary 
+ON EmployeeDemog.EmployeeID = EmployeeSalary.EmployeeID
+
+--Inner Join
+SELECT EmployeeDemog.EmployeeID, FirstName, LastName, Salary
+FROM EmployeeDemog 
+Inner Join EmployeeSalary 
+ON EmployeeDemog.EmployeeID = EmployeeSalary.EmployeeID
+WHERE FirstName <> 'Lily'
+ORDER BY Salary DESC
+
+--Full Outer Join
+SELECT * 
+FROM EmployeeDemog
+Full Outer Join EmployeeWarehouse
+ON EmployeeDemog.EmployeeID = EmployeeWarehouse.EmployeeID
