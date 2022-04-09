@@ -1,0 +1,24 @@
+--SQL Union and Union ALL
+
+--Basic Union combines two tables and removes duplicates
+SELECT * 
+FROM EmployeeDemog
+UNION
+SELECT *
+FROM EmployeeWarehouse
+
+–-Union ALL will return all values from both tables
+SELECT * 
+FROM EmployeeDemog
+UNION ALL
+SELECT *
+FROM EmployeeWarehouse
+ORDER BY EmployeeID -will combine 2 tables and include duplicates
+
+--Union can combine values from two tables with different inputs but the input types and number of inputs need to match
+SELECT EmployeeID, FirstName, Age
+FROM EmployeeDemog
+UNION 
+SELECT EmployeeID, JobTitle, Salary
+FROM EmployeeSalary
+ORDER BY EmployeeID 
