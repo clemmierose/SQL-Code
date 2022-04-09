@@ -1,0 +1,53 @@
+-- SQL Use Cases 
+
+SELECT FirstName, LastName, Age,
+CASE 
+  WHEN Age >30 THEN 'Old'
+  ELSE 'Young'
+END
+FROM EmployeeDemog
+WHERE Age is NOT NULL
+ORDER BY Age
+
+SELECT FirstName, LastName, Age,
+CASE 
+  WHEN Age > 30 THEN 'Old'
+  WHEN Age BETWEEN 27 AND 30 THEN 'Young'
+  ELSE 'Baby'
+END
+FROM EmployeeDemog
+WHERE Age is NOT NULL
+ORDER BY Age 
+– will prioritize the first met condition 
+
+SELECT FirstName, JobTitle, Salary,
+CASE 
+ WHEN JobTitle = 'Sales'
+ THEN Salary + (Salary * .10)
+ WHEN JobTitle = 'Manager' THEN Salary + (Salary * .05)
+ ELSE Salary + (Salary * .02)
+END AS SalaryAfterRaise
+FROM EmployeeDemog 
+JOIN EmployeeSalary 
+ON EmployeeDemog.EmployeeID = EmployeeSalary.EmployeeID
+ORDER BY SalaryAfterRaise DESC 
+
+
+--SQL HAVING Clause
+
+SELECT JobTitle, COUNT(JobTitle) AS NumberOfPositions
+FROM EmployeeDemog
+JOIN EmployeeSalary 
+ON EmployeeDemog.EmployeeID = EmployeeSalary.EmployeeID
+GROUP BY JobTitle
+HAVING COUNT(JobTitle) > 1
+
+SELECT JobTitle, AVG(Salary) AS AvgSalary
+FROM EmployeeDemog
+JOIN EmployeeSalary 
+ON EmployeeDemog.EmployeeID = EmployeeSalary.EmployeeID
+GROUP BY JobTitle
+HAVING AVG(Salary) > 30000
+ORDER BY AVG(Salary)
+
+-Having clause may be used with aggregate functions contrary to the WHERE clause
