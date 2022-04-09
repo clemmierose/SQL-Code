@@ -1,0 +1,50 @@
+--SQL CTE Common Table Expression
+
+WITH CTE_Employee as 
+(SELECT FirstName, LastName, Gender, Salary,
+COUNT(Gender) OVER (PARTITION BY Gender) as WorkersPerGender,
+AVG(Salary) OVER (PARTITION BY Salary) as AvgSalary
+FROM EmployeeDemog Demo
+JOIN EmployeeSalary Sal 
+ON Demo.EmployeeID = Sal.EmployeeID
+WHERE Salary > '29000'
+)
+SELECT FirstName, AvgSalary
+FROM CTE_Employee 
+
+-CTE will be run every time as it is stored in memory and is only valid for the query following it.
+
+--SQL Temp Table
+CREATE TABLE #temp_Employee (
+EmployeeID int,
+JobTitle varchar (50),
+Salary int
+)
+
+SELECT * 
+FROM #temp_Employee
+
+INSERT INTO #temp_Employee VALUES (
+'1001', 'HR', '45000')
+
+INSERT INTO #temp_Employee
+SELECT *
+FROM EmployeeSalary
+
+CREATE TABLE #temp_Employee2 (
+JobTitle varchar (50),
+EmployeesPerJob int,
+AvgAge int,
+AvgSalary int)
+
+INSERT INTO #temp_Employee2 
+SELECT JobTitle, Count(JobTitle), Avg(Age), AVG(Salary)
+FROM EmployeeDemog demo
+JOIN EmployeeSalary  sal
+ON demo.EmployeeID = sal.EmployeeID
+GROUP BY JobTitle
+
+SELECT * 
+FROM #temp_Employee2
+
+-for stored procedures adding DROP TABLE IF EXISTS xxxx
