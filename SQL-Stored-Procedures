@@ -1,0 +1,42 @@
+--SQL Stored Procedures 
+
+CREATE PROCEDURE TEST
+AS 
+SELECT *
+FROM EmployeeDemog
+EXEC TEST
+
+CREATE PROCEDURE Temp_Employee
+AS
+CREATE TABLE #temp_employee (
+JobTitle varchar(30),
+EmployeePerJob int,
+AvgSalary INT 
+)
+
+INSERT INTO #temp_employee
+SELECT JobTitle, Count(JobTitle), AVG(Salary)
+FROM EmployeeDemog demo
+JOIN EmployeeSalary sal
+ ON demo.EmployeeID = sal.EmployeeID
+GROUP BY JobTitle 
+
+SELECT * 
+FROM #temp_employee
+
+EXEC Temp_Employee
+
+
+--Stored Procedure for Login
+
+CREATE PROCEDURE Verify @username nchar(20), @password nchar(20)
+AS
+IF EXISTS(SELECT * FROM Login where Username=@username and Password=@password)
+	PRINT('User Exists')
+ELSE
+	PRINT('User Does not Exist')
+GO
+
+--exec
+EXEC Verify @username='Anna', @password='Anna123'
+GO
